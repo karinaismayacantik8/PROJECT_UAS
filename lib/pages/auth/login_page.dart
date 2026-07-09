@@ -15,7 +15,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController emailController =
@@ -32,7 +31,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login() async {
-
     if (!_formKey.currentState!.validate()) return;
 
     final auth = context.read<AuthProvider>();
@@ -45,14 +43,24 @@ class _LoginPageState extends State<LoginPage> {
     if (!mounted) return;
 
     if (success) {
+      /// ===============================
+      /// CEK ROLE USER
+      /// ===============================
 
-      Navigator.pushReplacementNamed(
-        context,
-        AppRoutes.customerDashboard,
-      );
-
+      if (auth.user?.role.toLowerCase() == "admin") {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.adminDashboard,
+          (route) => false,
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.customerDashboard,
+          (route) => false,
+        );
+      }
     } else {
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -60,34 +68,23 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       );
-
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     final auth = context.watch<AuthProvider>();
 
     return Scaffold(
-
       body: SafeArea(
-
         child: SingleChildScrollView(
-
           padding: const EdgeInsets.all(24),
-
           child: Form(
-
             key: _formKey,
-
             child: Column(
-
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-
+              crossAxisAlignment:
+                  CrossAxisAlignment.stretch,
               children: [
-
                 const SizedBox(height: 60),
 
                 const Icon(
@@ -123,8 +120,10 @@ class _LoginPageState extends State<LoginPage> {
                   label: "Email",
                   hint: "Masukkan email",
                   icon: Icons.email,
-                  keyboardType: TextInputType.emailAddress,
-                  validator: Validator.validateEmail,
+                  keyboardType:
+                      TextInputType.emailAddress,
+                  validator:
+                      Validator.validateEmail,
                 ),
 
                 const SizedBox(height: 20),
@@ -135,7 +134,8 @@ class _LoginPageState extends State<LoginPage> {
                   hint: "Masukkan password",
                   icon: Icons.lock,
                   isPassword: true,
-                  validator: Validator.validatePassword,
+                  validator:
+                      Validator.validatePassword,
                 ),
 
                 const SizedBox(height: 30),
@@ -149,45 +149,31 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 20),
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment:
+                      MainAxisAlignment.center,
                   children: [
-
                     const Text(
                       "Belum punya akun?",
                     ),
 
                     TextButton(
-
                       onPressed: () {
-
                         Navigator.pushNamed(
                           context,
                           AppRoutes.register,
                         );
-
                       },
-
                       child: const Text(
                         "Register",
                       ),
-
                     ),
-
                   ],
                 ),
-
               ],
-
             ),
-
           ),
-
         ),
-
       ),
-
     );
-
   }
-
 }

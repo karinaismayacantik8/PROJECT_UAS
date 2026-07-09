@@ -7,6 +7,7 @@ import '../pages/cart/cart_page.dart';
 import '../pages/checkout/checkout_page.dart';
 import '../pages/dashboard/customer_dashboard.dart';
 import '../pages/home/home_page.dart';
+import '../pages/order/order_history_page.dart';
 import '../pages/profile/profile_page.dart';
 import '../pages/splash/splash_page.dart';
 import '../pages/wishlist/wishlist_page.dart';
@@ -34,22 +35,19 @@ class AppRoutes {
   static const adminDashboard = "/admin-dashboard";
 
   static Map<String, WidgetBuilder> routes = {
-    // Splash
     splash: (_) => const SplashPage(),
 
-    // Auth
     login: (_) => const LoginPage(),
     register: (_) => const RegisterPage(),
 
-    // Customer
     customerDashboard: (_) => const CustomerDashboard(),
     home: (_) => const HomePage(),
     profile: (_) => const ProfilePage(),
     cart: (_) => const CartPage(),
     checkout: (_) => const CheckoutPage(),
     wishlist: (_) => const WishlistPage(),
+    orderHistory: (_) => const OrderHistoryPage(),
 
-    // Admin
     adminDashboard: (_) => const AdminDashboard(),
   };
 }
